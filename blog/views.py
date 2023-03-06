@@ -14,3 +14,8 @@ def tag(request):
 def search(request):
 
     return render(request, 'search.html', {})
+
+
+def post(request):
+
+    return render(request, 'post.html', {})
