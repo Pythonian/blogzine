@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>Blogzine</title>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="">
+    <meta name="description" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Rubik:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/fontawesome/all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/tiny-slider/tiny-slider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/glightbox/css/glightbox.css' %}">
+
+    <!-- Theme CSS -->
+    <link id="style-switch" rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/app.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Background vintage pattern START -->
+    <div class="position-absolute top-0 start-50 translate-middle-x w-100 opacity-9 z-index-n1">
+        <img src="{% static 'images/vintage-pattern.png' %}" alt="">
+    </div>
+    <!-- Background vintage pattern END -->
+
+    <!-- Offcanvas START -->
+    {% include 'partials/_offcanvas.html' %}
+    <!-- Offcanvas END -->
+
+    <!-- ======================= Header START -->
+    <header class="bg-transparent">
+        <!-- Navbar top -->
+        <div class="navbar-top d-none d-lg-block">
+            <div class="container">
+                <div class="row d-flex align-items-center py-2">
+                    <!-- Flashnews -->
+                    <div class="col-sm-12 d-sm-flex align-items-center">
+                        <!-- Title -->
+                        <div class="me-3">
+                            <span class="badge bg-dark p-2 px-3 text-white"><i class="fas fa-bolt-lightning pe-1"></i>
+                                Flash news</span>
+                        </div>
+                        <!-- Slider -->
+                        <div class="tiny-slider">
+                            <div class="tiny-slider-inner" data-autoplay="true" data-hoverpause="true" data-gutter="0"
+                                data-arrow="false" data-dots="false" data-items="1">
+                                <!-- Slider items -->
+                                {% include 'partials/_flashnews.html' %}
+                                {% include 'partials/_flashnews.html' %}
+                                {% include 'partials/_flashnews.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Divider -->
+                <div class="border-bottom border-2 border-primary opacity-1"></div>
+            </div>
+        </div>
+        <!-- Navbar top -->
+        <div class="navbar-top d-none d-lg-block bg-dark">
+            <div class="container">
+                <div class="d-md-flex justify-content-between align-items-center">
+
+                    <!-- Top bar right -->
+                    <div class="d-flex align-items-center">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-white px-2 ps-0 fs-5" href="#"><i
+                                        class="fab fa-facebook-square"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white px-2 fs-5" href="#"><i
+                                        class="fab fa-twitter-square"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-github"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-pinterest"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-google-plus"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white ps-2 pe-0 fs-5" href="#"><i class="fab fa-vimeo"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-white">Wed, March 31, 2022</p>
+                    </div>
+
+                </div>
+                <!-- Divider -->
+                <div class="border-bottom border-secondary opacity-2"></div>
+            </div>
+        </div>
+        <!-- Navbar logo section START -->
+        <div>
+            <div class="container">
+                <div class="d-sm-flex justify-content-sm-between align-items-sm-center my-2">
+                    <div class="text-center text-md-start">
+                        <a class="btn btn-dark rounded-0" href="#"><i class="fas fa-paper-plane pe-2"></i> Contact
+                            us</a>
+                    </div>
+                    <!-- Logo START -->
+                    <a class="navbar-brand d-block" href="/">
+                        <img class="navbar-brand-item" src="{% static 'images/logo-2.svg' %}" alt="logo" style="height: 46px;">
+                    </a>
+                    <!-- Logo END -->
+                    <!-- Weather -->
+                    <div class="d-flex justify-content-center justify-content-md-end">
+                        <i class="bi bi-cloud-hail fs-1 h5"></i>
+                        <div class="ms-3">
+                            <span class="d-block">31 °C LA,</span>
+                            <span>Nigeria</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar logo section END -->
+
+        <!-- Navbar START -->
+        <div class="navbar-light navbar-sticky header-static">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <div class="w-100 border-top border-bottom border-secondary d-flex">
+                        <!-- Responsive navbar toggler -->
+                        <button class="navbar-toggler me-auto" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="text-secondary h6 ps-lg-3">Menu</span>
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <!-- Main navbar START -->
+                        <div class="collapse navbar-collapse" id="navbarCollapse">
+                            <ul class="navbar-nav navbar-nav-scroll navbar-lh-sm">
+                                <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="archive.html">Archive</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="post.html">Post</a></li>
+                            </ul>
+                        </div>
+                        <!-- Main navbar END -->
+
+                        <!-- Nav right START -->
+                        <div class="nav flex-nowrap align-items-center me-2">
+                            <!-- Nav Search -->
+                            <div class="nav-item dropdown nav-search dropdown-toggle-icon-none">
+                                <a class="nav-link text-uppercase dropdown-toggle" role="button" href="#" id="navSearch"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-search fs-4"> </i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end shadow rounded p-2"
+                                    aria-labelledby="navSearch">
+                                    <form class="input-group">
+                                        <input class="form-control border-dark" type="search" placeholder="Search"
+                                            aria-label="Search">
+                                        <button class="btn btn-dark m-0" type="submit">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Offcanvas menu toggler -->
+                            <div class="nav-item">
+                                <a class="nav-link pe-0" data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button"
+                                    aria-controls="offcanvasMenu">
+                                    <i class="bi bi-text-right rtl-flip fs-2" data-bs-target="#offcanvasMenu"> </i>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Nav right END -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar END -->
+    </header>
+    <!-- ======================= Header END -->
+
+    {% block content %}{% endblock content %}
+
+    <!-- ======================= Divider START -->
+    <div class="border-bottom border-secondary opacity-2 mb-0 mt-2"></div>
+    <!-- ======================= Divider END -->
+
+    {% include 'partials/_footer.html' %}
+    
+    <!-- Back to top -->
+    <div class="back-top grayscale"><i class="bi bi-arrow-up-short"></i></div>
+
+    <!-- ======================= JS libraries, plugins and custom scripts -->
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Vendors -->
+    <script src="{% static 'vendor/tiny-slider/tiny-slider.js' %}"></script>
+    <script src="{% static 'vendor/sticky-js/sticky.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.js' %}"></script>
+
+    <!-- Template Functions -->
+    <script src="{% static 'js/functions.js' %}"></script>
+
+</body>
+
+</html>
