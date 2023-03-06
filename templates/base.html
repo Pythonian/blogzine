@@ -2,7 +2,7 @@
 <html lang="en">
 {% load static %}
 <head>
-    <title>Blogzine</title>
+    <title>{% block title %}{% endblock title %} | Blogzine</title>
     <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,6 +44,7 @@
 
     <!-- ======================= Header START -->
     <header class="bg-transparent">
+        {% block topnavbar %}
         <!-- Navbar top -->
         <div class="navbar-top d-none d-lg-block">
             <div class="container">
@@ -75,7 +76,6 @@
         <div class="navbar-top d-none d-lg-block bg-dark">
             <div class="container">
                 <div class="d-md-flex justify-content-between align-items-center">
-
                     <!-- Top bar right -->
                     <div class="d-flex align-items-center">
                         <ul class="nav">
@@ -113,26 +113,25 @@
                 <div class="border-bottom border-secondary opacity-2"></div>
             </div>
         </div>
+        {% endblock topnavbar %}
         <!-- Navbar logo section START -->
-        <div>
-            <div class="container">
-                <div class="d-sm-flex justify-content-sm-between align-items-sm-center my-2">
-                    <div class="text-center text-md-start">
-                        <a class="btn btn-dark rounded-0" href="#"><i class="fas fa-paper-plane pe-2"></i> Contact
-                            us</a>
-                    </div>
-                    <!-- Logo START -->
-                    <a class="navbar-brand d-block" href="/">
-                        <img class="navbar-brand-item" src="{% static 'images/logo-2.svg' %}" alt="logo" style="height: 46px;">
-                    </a>
-                    <!-- Logo END -->
-                    <!-- Weather -->
-                    <div class="d-flex justify-content-center justify-content-md-end">
-                        <i class="bi bi-cloud-hail fs-1 h5"></i>
-                        <div class="ms-3">
-                            <span class="d-block">31 °C LA,</span>
-                            <span>Nigeria</span>
-                        </div>
+        <div class="container">
+            <div class="d-sm-flex justify-content-sm-between align-items-sm-center py-2">
+                <div class="text-center text-md-start">
+                    <a class="btn btn-dark rounded-0" href="#"><i class="fas fa-paper-plane pe-2"></i> Contact
+                        us</a>
+                </div>
+                <!-- Logo START -->
+                <a class="navbar-brand d-block" href="/">
+                    <img class="navbar-brand-item" src="{% static 'images/logo-2.svg' %}" alt="logo" style="height: 46px;">
+                </a>
+                <!-- Logo END -->
+                <!-- Weather -->
+                <div class="d-flex justify-content-center justify-content-md-end">
+                    <i class="bi bi-cloud-hail fs-1 h5"></i>
+                    <div class="ms-3">
+                        <span class="d-block">31 °C LA,</span>
+                        <span>Nigeria</span>
                     </div>
                 </div>
             </div>
@@ -156,8 +155,10 @@
                         <div class="collapse navbar-collapse" id="navbarCollapse">
                             <ul class="navbar-nav navbar-nav-scroll navbar-lh-sm">
                                 <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="archive.html">Archive</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="post.html">Post</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/archive/">Archive</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/tag/">Tag</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/search/">Search</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/post/">Post</a></li>
                             </ul>
                         </div>
                         <!-- Main navbar END -->
