@@ -1,22 +1,20 @@
 {% load static %}
 <div class="col-sm-6 col-lg-3">
-    <div class="card bg-transparent">
-        <!-- Card img -->
-        <img class="card-img rounded-0 grayscale" src="{% static 'images/blog/16by9/small/01.jpg' %}" alt="Card image">
+    <div class="card bg-transparent h-100">
+        {% if post.image %}
+        <img class="card-img rounded-0 grayscale" src="{{ post.image.url }}" alt="{{ post.image_caption }}">
+        {% endif %}
         <div class="card-body px-0 pt-3">
-            <!-- Card info -->
             <ul class="nav nav-divider align-items-center small mb-2">
                 <li class="nav-item">
-                    <a href="#" class="text-reset btn-link">Joan Wallace</a>
+                    <a href="#" class="text-reset btn-link">{{ post.author }}</a>
                 </li>
-                <li class="nav-item">Feb 18, 2022</li>
+                <li class="nav-item">{{ post.publish|date:"F j, Y" }}</li>
             </ul>
-            <h5 class="card-title"><a href="#" class="btn-link text-reset fw-bold stretched-link">7
-                    common
-                    mistakes everyone makes while traveling</a></h5>
-            <p>Green male Beginning day behold gathering day earth Very hath shall very abundantly
-                face
-                midst.</p>
+            <h5 class="card-title">
+                <a href="{{ post.get_absolute_url }}" class="btn-link text-reset fw-bold stretched-link">{{ post.title }}</a>
+            </h5>
+            <p>{{ post.excerpt }}</p>
         </div>
     </div>
 </div>

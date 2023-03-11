@@ -1,6 +1,6 @@
 <div class="d-flex position-relative mb-3">
-    <span class="me-3 mt-n1 fa-fw fw-bold fs-3 opacity-5">01</span>
+    <span class="me-3 mt-n1 fa-fw fw-bold fs-3 opacity-5">0{{ forloop.counter }}</span>
     <h6>
-        <a href="#" class="stretched-link text-reset btn-link">Bad habits that people in the business industry need to quit</a>
+        <a href="{{ post.get_absolute_url }}" class="stretched-link text-reset btn-link">{{ post.title }}</a>
     </h6>
 </div>

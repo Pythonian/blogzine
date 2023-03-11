@@ -5,36 +5,14 @@
 {% block content %} 
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
-    <!-- ======================= Latest news slider START -->
-    <section class="py-4 card-grid position-relative">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <!-- Slider START -->
-                    <div class="tiny-slider">
-                        <div class="tiny-slider-inner" data-autoplay="true" data-hoverpause="true" data-gutter="24"
-                            data-arrow="false" data-dots="false" data-items-md="2" data-items-sm="2" data-items-xs="1"
-                            data-items="3">
-                            {% include 'partials/_latestnews_slider.html' %}
-                            {% include 'partials/_latestnews_slider.html' %}
-                            {% include 'partials/_latestnews_slider.html' %}
-                            {% include 'partials/_latestnews_slider.html' %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Row END -->
-        </div>
-    </section>
-    <!-- ======================= Latest news slider END -->
-
     <section class="position-relative">
         <div class="container">
             <div class="row">
-                <!-- Main Post START -->
                 <div class="col-lg-9">
                     <!-- Sponsored POST START -->
-                    {% include 'partials/_sponsored_news.html' %}
+                    {% if featured_post %}
+                        {% include 'partials/_sponsored_news.html' with post=featured_post %}
+                    {% endif %}
                     <!-- Sponsored POST END -->
                     <!-- Divider -->
                     <div class="border-bottom border-primary border-2 opacity-1 my-4"></div>
@@ -42,49 +20,38 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-4">
-                                <h2 class="m-0"><i class="bi bi-hourglass-top me-2"></i>Today's top highlights</h2>
+                                <h2 class="m-0"><i class="bi bi-hourglass-top me-2"></i>Latest Posts</h2>
                                 <p>Latest breaking news, pictures, videos, and special reports</p>
                             </div>
                             <div class="row">
+                                {% for post in latest_posts %}
                                 {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
-                                {% include 'partials/_latestnews_card.html' %}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                     <!-- Small card 6X6 END -->
                 </div>
-                <!-- Main Post END -->
                 <!-- Sidebar START -->
                 <div class="col-lg-3 mt-5 mt-lg-0">
                     <div>
                         <!-- Categories -->
                         <div class="row g-2">
                             <h5>Categories</h5>
+                            {% for category in categories %}
                             {% include 'partials/_category_list.html' %}
-                            {% include 'partials/_category_list.html' %}
-                            {% include 'partials/_category_list.html' %}
-                            {% include 'partials/_category_list.html' %}
-                            {% include 'partials/_category_list.html' %}
+                            {% endfor %}
                             <!-- View All Category button -->
-                            <div class="text-center mt-3">
+                            <!-- <div class="text-center mt-3">
                                 <a href="#" class="fw-bold text-body text-primary-hover text-decoration-underline">View all categories</a>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- Trending news -->
                         <div>
                             <h5 class="mt-5 mb-3"><i class="fas fa-fire me-1"></i> Trending news</h5>
+                            {% for post in trending_posts %}
                             {% include 'partials/_trendingnews_list.html' %}
-                            {% include 'partials/_trendingnews_list.html' %}
-                            {% include 'partials/_trendingnews_list.html' %}
-                            {% include 'partials/_trendingnews_list.html' %}
-                            {% include 'partials/_trendingnews_list.html' %}
-                            {% include 'partials/_trendingnews_list.html' %}
+                            {% endfor %}
                         </div>
 
                         <div>
@@ -120,67 +87,25 @@
         <div class="container">
             <div class="row g-4">
                 
+                {% for category, posts in context.items %}
                 <div class="col-lg-4">
-                    <h4 class="mb-3">Politics</h4>
+                    <h4 class="mb-3">{{ category.name }}</h4>
                     <div class="bg-light">
-                        {% include 'partials/_category_featurednews.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
+                        {% for post in posts %}
+                            {% if forloop.first %}
+                                {% include 'partials/_category_featurednews.html' %}
+                            {% else %}
+                                {% include 'partials/_category_news.html' %}
+                            {% endif %} 
+                        {% endfor %}
                     </div>
                 </div>
-                
-                <div class="col-lg-4">
-                    <h4 class="mb-3">Sports</h4>
-                    <div class="bg-light">
-                        {% include 'partials/_category_featurednews.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                    </div>
-                </div>
-                
-                <div class="col-lg-4">
-                    <h4 class="mb-3">Business</h4>
-                    <div class="bg-light">
-                        {% include 'partials/_category_featurednews.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                        {% include 'partials/_category_news.html' %}
-                    </div>
-                </div>
+                {% endfor %}
                 
             </div>
         </div>
     </section>
     <!-- ======================= News by Categories END -->
-
-    <!-- ======================= Divider START -->
-    <div class="container">
-        <div class="border-bottom border-secondary opacity-2 mb-0 mt-2"></div>
-    </div>
-    <!-- ======================= Divider END -->
-
-    <!-- ======================= Featured news START -->
-    <section class="py-4">
-        <div class="container">
-            <div class="row g-4 flex-fill">
-                <!-- Title -->
-                <div class="col-12">
-                    <h2 class="m-0"><i class="fas fa-newspaper me-2"></i>Featured news</h2>
-                    <p>Checkout the hand pick post by admin</p>
-                </div>
-                {% include 'partials/_features_news.html' %}
-                {% include 'partials/_features_news.html' %}
-                {% include 'partials/_features_news.html' %}
-                {% include 'partials/_features_news.html' %}
-            </div>
-        </div>
-    </section>
-    <!-- ======================= Featured stories END -->
 
     <!-- ======================= Divider START -->
     <div class="container">

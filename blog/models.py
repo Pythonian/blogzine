@@ -45,10 +45,10 @@ class Post(models.Model):
                                  on_delete=models.PROTECT,
                                  verbose_name=_('category'),
                                  related_name='posts')
-    excerpt = models.CharField(_('excerpt'), max_length=200)
+    excerpt = models.CharField(_('excerpt'), max_length=250)
     body = models.TextField(_('body'))
     image = models.ImageField(upload_to='posts',
-                              verbose_name=_('image'))
+                              verbose_name=_('image'), default='default.jpg')
     image_caption = models.CharField(_('image caption'),
                                      blank=True, max_length=50)
     publish = models.DateTimeField(default=timezone.now)
@@ -82,9 +82,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_page_views_last_week(self):
+        """Calculates the number of page views for a post in the last 7 days"""
+        cutoff = timezone.now() - timezone.timedelta(days=7)
+        # count the number of page views that occured after the cutoff date
+        views = self.post.filter(publish__gte=cutoff).count()
+        return views
 
     def get_absolute_url(self):
-        return reverse('blog:post_detail',
+        return reverse('post',
                        args=[self.publish.year,
                              self.publish.month,
                              self.publish.day,
@@ -97,8 +104,8 @@ class Post(models.Model):
         return self.get_next_by_publish(status=Post.Status.PUBLISHED)
     
     def save(self, *args, **kwargs):
-        if not self.excerpts:
-            self.excerpts = self.body[:140]
+        if not self.excerpt:
+            self.excerpt = self.body[:140]
 
         if self.body:
             self.read_time = get_read_time(self.body)

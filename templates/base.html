@@ -38,10 +38,6 @@
     </div>
     <!-- Background vintage pattern END -->
 
-    <!-- Offcanvas START -->
-    {% include 'partials/_offcanvas.html' %}
-    <!-- Offcanvas END -->
-
     <!-- ======================= Header START -->
     <header class="bg-transparent">
         {% block topnavbar %}
@@ -154,11 +150,10 @@
                         <!-- Main navbar START -->
                         <div class="collapse navbar-collapse" id="navbarCollapse">
                             <ul class="navbar-nav navbar-nav-scroll navbar-lh-sm">
-                                <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Home</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="/archive/">Archive</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="/tag/">Tag</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="/search/">Search</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="/post/">Post</a></li>
                             </ul>
                         </div>
                         <!-- Main navbar END -->
@@ -179,14 +174,6 @@
                                         <button class="btn btn-dark m-0" type="submit">Search</button>
                                     </form>
                                 </div>
-                            </div>
-
-                            <!-- Offcanvas menu toggler -->
-                            <div class="nav-item">
-                                <a class="nav-link pe-0" data-bs-toggle="offcanvas" href="#offcanvasMenu" role="button"
-                                    aria-controls="offcanvasMenu">
-                                    <i class="bi bi-text-right rtl-flip fs-2" data-bs-target="#offcanvasMenu"> </i>
-                                </a>
                             </div>
                         </div>
                         <!-- Nav right END -->

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from django.core.paginator import Paginator, EmptyPage, \
                                   PageNotAnInteger
 from django.views.generic import ListView
@@ -10,33 +10,39 @@ from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
-from django.db.models import Count
+from django.utils import timezone
+from django.db.models import Count, Q
+from django.db.models.functions import Random
 
 
-def post_list(request, tag_slug=None):
-    post_list = Post.published.all()
-    tag = None
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        post_list = post_list.filter(tags__in=[tag])
-    # Pagination with 3 posts per page
-    paginator = Paginator(post_list, 3)
-    page_number = request.GET.get('page', 1)
-    try:
-        posts = paginator.page(page_number)
-    except PageNotAnInteger:
-        # If page_number is not an integer deliver the first page
-        posts = paginator.page(1)
-    except EmptyPage:
-        # If page_number is out of range deliver last page of results
-        posts = paginator.page(paginator.num_pages)
+def home(request):
+    latest_posts = Post.published.all()[:8]
+    featured_post = Post.published.filter(featured=True).first()
+    categories = Category.objects.all()[:5]
+    
+    # post_categories = Category.objects.order_by('?')[:3]
+    post_categories = Category.objects.annotate(post_count=Count('posts')).filter(post_count__gte=2).order_by('?')[:3]
+    # categories = Category.objects.annotate(post_count=Count('post')).filter(post_count__gte=3).order_by('?')[:3]
+    context = {}
+    for category in post_categories:
+        posts = Post.published.filter(category=category)[:3]
+        context[category] = posts
+
+    cutoff = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.published.annotate(
+        views_last_week=Count('page_views', filter=Q(
+        publish__gte=cutoff))).order_by('-views_last_week')[:5]
     return render(request,
-                 'blog/post/list.html',
-                 {'posts': posts,
-                  'tag': tag})
+                 'home.html',
+                 {'latest_posts': latest_posts,
+                  'featured_post': featured_post,
+                  'trending_posts': trending_posts,
+                  'post_categories': post_categories,
+                  'context': context,
+                  'categories': categories})
 
 
-def post_detail(request, year, month, day, post):
+def post(request, year, month, day, post):
     post = get_object_or_404(Post,
                              status=Post.Status.PUBLISHED,
                              slug=post,
@@ -57,21 +63,16 @@ def post_detail(request, year, month, day, post):
                                 .order_by('-same_tags','-publish')[:4]
 
     return render(request,
-                  'blog/post/detail.html',
+                  'post.html',
                   {'post': post,
                    'comments': comments,
                    'form': form,
                    'similar_posts': similar_posts})
 
 
-class PostListView(ListView):
-    """
-    Alternative post list view
-    """
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+def archive(request):
+    posts = Post.published.all()
+    return render(request, 'archive.html', {'posts': posts})
 
 
 def post_share(request, post_id):
