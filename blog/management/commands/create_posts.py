@@ -30,11 +30,11 @@ class Command(BaseCommand):
             status = Post.Status.PUBLISHED
             page_views = fake.random_int(min=1, max=1000)
             read_time = fake.random_int(min=1, max=60)
-            featured = fake.boolean(chance_of_getting_true=50)
+            sponsored = fake.boolean(chance_of_getting_true=50)
             enable_comments = fake.boolean(chance_of_getting_true=50)
 
             post = Post.objects.create(title=title, slug=slug, author=author, category=category, excerpt=excerpt,
                                        body=body, publish=publish, status=status, page_views=page_views,
-                                       read_time=read_time, featured=featured, enable_comments=enable_comments)
+                                       read_time=read_time, sponsored=sponsored, enable_comments=enable_comments)
 
             self.stdout.write(self.style.SUCCESS(f'Successfully created post {i+1}: {post.title}'))

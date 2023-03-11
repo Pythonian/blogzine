@@ -62,7 +62,7 @@ class Post(models.Model):
     read_time = models.PositiveIntegerField(
         _('read time'), default=0,
         help_text='Estimated time taken to read the post.')
-    featured = models.BooleanField(
+    sponsored = models.BooleanField(
         default=False)
     enable_comments = models.BooleanField(
         default=True)
@@ -110,13 +110,13 @@ class Post(models.Model):
         if self.body:
             self.read_time = get_read_time(self.body)
 
-        # When a post has been featured, update the
-        # other existing featured post as False
-        if self.featured:
-            featured_post = Post.objects.filter(
-                featured=True).exclude(pk=self.pk)
-            if featured_post.exists():
-                featured_post.update(featured=False)
+        # When a post has been sponsored, update the
+        # other existing sponsored post as False
+        if self.sponsored:
+            sponsored_post = Post.objects.filter(
+                sponsored=True).exclude(pk=self.pk)
+            if sponsored_post.exists():
+                sponsored_post.update(sponsored=False)
 
         super().save(*args, **kwargs)
 

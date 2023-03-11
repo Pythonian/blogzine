@@ -17,7 +17,7 @@ from django.db.models.functions import Random
 
 def home(request):
     latest_posts = Post.published.all()[:8]
-    featured_post = Post.published.filter(featured=True).first()
+    sponsored_post = Post.published.filter(sponsored=True).first()
     categories = Category.objects.all()[:5]
     
     # post_categories = Category.objects.order_by('?')[:3]
@@ -35,7 +35,7 @@ def home(request):
     return render(request,
                  'home.html',
                  {'latest_posts': latest_posts,
-                  'featured_post': featured_post,
+                  'sponsored_post': sponsored_post,
                   'trending_posts': trending_posts,
                   'post_categories': post_categories,
                   'context': context,
