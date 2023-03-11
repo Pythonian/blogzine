@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Tag: Business{% endblock title %}
+
+{% block content %}
+
+{% block topnavbar %}{% endblock topnavbar %}
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- ======================= Inner intro START -->
+    <section class="pt-4">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-8">
+                    <div class="display-1 text-dark">#business</div>
+                    <p>15 posts in this tag</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======================= Inner intro END -->
+
+    <!-- ======================= Main content START -->
+    <section class="position-relative pt-0">
+        <div class="container">
+            <div class="row g-2">
+                <div class="col-lg-6">
+                    {% include 'partials/_sponsored_news.html' %}
+                </div>
+                <div class="col-lg-6">
+                    {% include 'partials/_sponsored_news.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======================= Main content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+{% endblock content %}

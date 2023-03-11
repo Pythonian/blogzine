@@ -22,20 +22,39 @@
     </section>
     <!-- ======================= Inner intro END -->
 
-    <!-- =======================
-    Main content START -->
+    <!-- ======================= Main content START -->
     <section class="position-relative pt-0">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="row gy-4">
 
-                        <!-- Load more START -->
+                        {% include 'partials/_news_card.html' %}
+                        {% include 'partials/_news_card.html' %}
+                        {% include 'partials/_news_card.html' %}
+                        {% include 'partials/_news_card.html' %}
+                        {% include 'partials/_news_card.html' %}
+                        {% include 'partials/_news_card.html' %}
+                        
+                        <!-- Pagination START -->
                         <div class="col-12 text-center mt-5">
-                            <button type="button" class="btn btn-dark-soft">Load more post <i
-                                    class="bi bi-arrow-down-circle align-middle ms-2"></i></button>
+                            <nav class="mb-5 d-flex justify-content-center" aria-label="navigation">
+                                <ul class="pagination pagination-bordered">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Prev</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#">..</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">15</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
-                        <!-- Load more END -->
+                        <!-- Pagination END -->
+
                     </div>
                 </div>
             </div>

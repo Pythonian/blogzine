@@ -2077,11 +2077,11 @@ header .navbar-nav .nav-link.active:before {
 }
 
 .pagination-bordered .page-item:hover .page-link {
-    background-color: var(--bs-primary);
+    background-color: var(--bs-dark);
 }
 
 .pagination-bordered .page-item.active .page-link {
-    background-color: var(--bs-primary);
+    background-color: var(--bs-dark);
 }
 
 .pagination-bordered .page-link {
