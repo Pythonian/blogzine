@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import home, post, archive
+from .views import home, post, archive, post_search
 
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
 #     path('tag/', tag, name='tag'),
     path('<int:year>/<int:month>/<int:day>/<slug:post>/',
          post, name='post'),
+    path('search/', post_search, name='post_search'),
     path('', home, name='home'),
 ]
 

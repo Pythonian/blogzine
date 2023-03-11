@@ -21,7 +21,7 @@
                         <div class="col-12">
                             <div class="mb-4">
                                 <h2 class="m-0"><i class="bi bi-hourglass-top me-2"></i>Latest Posts</h2>
-                                <p>Latest breaking news, pictures, videos, and special reports</p>
+                                <p>Latest breaking news and special reports</p>
                             </div>
                             <div class="row">
                                 {% for post in latest_posts %}
@@ -106,50 +106,6 @@
         </div>
     </section>
     <!-- ======================= News by Categories END -->
-
-    <!-- ======================= Divider START -->
-    <div class="container">
-        <div class="border-bottom border-secondary opacity-2 mb-0 mt-2"></div>
-    </div>
-    <!-- ======================= Divider END -->
-
-    <!-- ======================= Editor's Pick, Recently viewed and Most viewed START -->
-    <section class="pt-4 pt-sm-5 pb-3 pb-sm-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4 class="mb-3">Editor's pick</h4>
-                    {% include 'partials/_news_card_image.html' %}
-                    {% include 'partials/_news_card_noimage.html' %}
-                    <div class="border-bottom border-secondary opacity-2 mt-2 mb-2"></div>
-                    {% include 'partials/_news_card_noimage.html' %}
-                    <div class="border-bottom border-secondary opacity-2 mt-2 mb-2"></div>
-                    {% include 'partials/_news_card_noimage.html' %}
-
-                </div>
-                <div class="col-md-4">
-                    <h4 class="mb-3">Recently viewed</h4>
-                    {% include 'partials/_news_card_image.html' %}
-                    {% include 'partials/_news_card_noimage.html' %}
-                    <div class="border-bottom border-secondary opacity-2 mt-2 mb-2"></div>
-                    {% include 'partials/_news_card_noimage.html' %}
-                    <div class="border-bottom border-secondary opacity-2 mt-2 mb-2"></div>
-                    {% include 'partials/_news_card_noimage.html' %}
-                </div>
-                <div class="col-md-4">
-                    <h4 class="mb-3">Most viewed</h4>
-                    {% include 'partials/_news_card_image.html' %}
-                    {% include 'partials/_news_card_noimage.html' %}
-                    <div class="border-bottom border-secondary opacity-2 mt-2 mb-2"></div>
-                    {% include 'partials/_news_card_noimage.html' %}
-                    <div class="border-bottom border-secondary opacity-2 mt-2 mb-2"></div>
-                    {% include 'partials/_news_card_noimage.html' %}
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ======================= Editor's Pick, Recently viewed and Most viewed END -->
 
 </main>
 <!-- **************** MAIN CONTENT END **************** -->

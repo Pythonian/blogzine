@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Search: Business{% endblock title %}
+{% block title %}Search: {{ query }}{% endblock title %}
 
 {% block content %}
-
-{% block topnavbar %}{% endblock topnavbar %}
 
 <!-- **************** MAIN CONTENT START **************** -->
 <main>
@@ -16,14 +14,14 @@
             <div class="row">
                 <div class="col-lg-9 mx-auto text-center py-5">
                     <span>Search results for</span>
-                    <h2 class="display-5">Covid-19</h2>
-                    <span class="lead">25 result found</span>
+                    <h2 class="display-5">{{ request.GET.q }}</h2>
+                    <span class="lead">{{ post_count }} result{{ post_count|pluralize }} found</span>
                     <!-- Search -->
                     <div class="row">
                         <div class="col-sm-8 col-md-6 col-lg-5 mx-auto">
-                            <form class="input-group mt-4">
+                            <form class="input-group mt-4" action="" method="get">
                                 <input class="form-control form-control-lg border-dark" type="search"
-                                    placeholder="Covid-19" aria-label="Search">
+                                    placeholder="{{ request.GET.q }}" name="q" aria-label="Search">
                                 <button class="btn btn-dark btn-lg m-0" type="submit">
                                     <span class="d-none d-md-block">Search</span>
                                     <i class="d-block d-md-none fas fa-search"></i></button>
@@ -43,16 +41,16 @@
             <div class="row">
                 <div class="col-lg-9 mx-auto">
 
+                    {% for post in posts %}
                     <!-- Card item START -->
                     <div class="card border rounded-3 up-hover p-4 mb-4">
                         <div class="row g-3">
                             <div class="col-sm-9">
                                 <!-- Categories -->
-                                <a href="#" class="badge bg-dark mb-2"><i class="fas fa-circle me-2 small fw-bold"></i>Marketing</a>
+                                <a href="{# post.category.get_absolute_url #}" class="badge bg-dark mb-2"><i class="fas fa-circle me-2 small fw-bold"></i>{{ post.category }}</a>
                                 <!-- Title -->
                                 <h3 class="card-title">
-                                    <a href="/post/" class="btn-link text-reset stretched-link">7 common mistakes everyone makes
-                                        while traveling</a>
+                                    <a href="{{ post.get_absolute_url }}" class="btn-link text-reset stretched-link">{{ post.title }}</a>
                                 </h3>
                                 <!-- Card info -->
                                 <ul class="nav nav-divider align-items-center d-none d-sm-inline-block">
@@ -61,30 +59,32 @@
                                             <div class="d-flex align-items-center position-relative">
                                                 <div class="avatar avatar-xs">
                                                     <div class="avatar-img rounded-circle bg-dark bg-opacity-10">
-                                                        <span class="text-dark position-absolute top-50 start-50 translate-middle fw-bold small">SA</span>
+                                                        <span class="text-dark position-absolute top-50 start-50 translate-middle fw-bold small">{{ post.author|make_list|first|title }}</span>
                                                     </div>
                                                 </div>
                                                 <span class="ms-3">by <a href="#"
-                                                        class="stretched-link text-reset btn-link">Samuel</a></span>
+                                                        class="stretched-link text-reset btn-link">{{ post.author }}</a></span>
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="nav-item">Jan 22, 2022</li>
+                                    <li class="nav-item">{{ post.publish|date:"F j, Y" }}</li>
                                 </ul>
                             </div>
-                            <!-- Image -->
+                            {% if post.image %}
                             <div class="col-sm-3">
-                                <img class="grayscale rounded-3" src="{% static 'images/blog/16by9/07.jpg' %}" alt="Card image">
+                                <img class="grayscale rounded-3" src="{{ post.image.url }}" alt="{{ post.image_caption }}">
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- Card item END -->
+                    {% endfor %}
 
                     <!-- Load more START -->
-                    <div class="col-12 text-center mt-5">
+                    <!-- <div class="col-12 text-center mt-5">
                         <button type="button" class="btn btn-dark-soft">Load more post <i
                                 class="bi bi-arrow-down-circle align-middle ms-2"></i></button>
-                    </div>
+                    </div> -->
                     <!-- Load more END -->
                     
                 </div>

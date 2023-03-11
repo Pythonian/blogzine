@@ -40,8 +40,6 @@
 
     <!-- ======================= Header START -->
     <header class="bg-transparent">
-        {% block topnavbar %}
-        
         <!-- Navbar top -->
         <div class="navbar-top d-none d-lg-block bg-dark">
             <div class="container">
@@ -50,32 +48,15 @@
                     <div class="d-flex align-items-center">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link text-white px-2 ps-0 fs-5" href="#"><i
-                                        class="fab fa-facebook-square"></i></a>
+                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fas fa-globe"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white px-2 fs-5" href="#"><i
-                                        class="fab fa-twitter-square"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-github"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-pinterest"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white px-2 fs-5" href="#"><i class="fab fa-google-plus"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white ps-2 pe-0 fs-5" href="#"><i class="fab fa-vimeo"></i></a>
+                                <a class="nav-link text-white px-2 fs-5" href="https://github.com/Pythonian/blogzine"><i class="fab fa-github"></i></a>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <p class="mb-0 text-white">Wed, March 31, 2022</p>
+                        <p class="mb-0 text-white">{% now "F j, Y" %}</p>
                     </div>
 
                 </div>
@@ -83,7 +64,6 @@
                 <div class="border-bottom border-secondary opacity-2"></div>
             </div>
         </div>
-        {% endblock topnavbar %}
         <!-- Navbar logo section START -->
         <div class="container">
             <div class="d-sm-flex justify-content-sm-between align-items-sm-center py-2">
@@ -127,7 +107,6 @@
                                 <li class="nav-item"> <a class="nav-link" href="{% url 'home' %}">Home</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="/archive/">Archive</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="/tag/">Tag</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="/search/">Search</a></li>
                             </ul>
                         </div>
                         <!-- Main navbar END -->
@@ -142,9 +121,9 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end shadow rounded p-2"
                                     aria-labelledby="navSearch">
-                                    <form class="input-group">
+                                    <form action="{% url 'post_search' %}" method="get" class="input-group">
                                         <input class="form-control border-dark" type="search" placeholder="Search"
-                                            aria-label="Search">
+                                            aria-label="Search" name="q">
                                         <button class="btn btn-dark m-0" type="submit">Search</button>
                                     </form>
                                 </div>

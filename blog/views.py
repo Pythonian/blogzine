@@ -12,17 +12,15 @@ from django.views.decorators.http import require_POST
 from taggit.models import Tag
 from django.utils import timezone
 from django.db.models import Count, Q
-from django.db.models.functions import Random
+from .utils import mk_paginator
 
 
 def home(request):
     latest_posts = Post.published.all()[:8]
     sponsored_post = Post.published.filter(sponsored=True).first()
-    categories = Category.objects.all()[:5]
+    categories = Category.objects.annotate(post_count=Count('posts')).filter(post_count__gte=1).order_by('?')[:5]
     
-    # post_categories = Category.objects.order_by('?')[:3]
     post_categories = Category.objects.annotate(post_count=Count('posts')).filter(post_count__gte=2).order_by('?')[:3]
-    # categories = Category.objects.annotate(post_count=Count('post')).filter(post_count__gte=3).order_by('?')[:3]
     context = {}
     for category in post_categories:
         posts = Post.published.filter(category=category)[:3]
@@ -32,6 +30,9 @@ def home(request):
     trending_posts = Post.published.annotate(
         views_last_week=Count('page_views', filter=Q(
         publish__gte=cutoff))).order_by('-views_last_week')[:5]
+    
+    most_viewed_posts = Post.published.order_by('-page_views')[:4]
+
     return render(request,
                  'home.html',
                  {'latest_posts': latest_posts,
@@ -39,6 +40,7 @@ def home(request):
                   'trending_posts': trending_posts,
                   'post_categories': post_categories,
                   'context': context,
+                  'most_viewed_posts': most_viewed_posts,
                   'categories': categories})
 
 
@@ -72,35 +74,8 @@ def post(request, year, month, day, post):
 
 def archive(request):
     posts = Post.published.all()
+    posts = mk_paginator(request, posts, 12)
     return render(request, 'archive.html', {'posts': posts})
-
-
-def post_share(request, post_id):
-    # Retrieve post by id
-    post = get_object_or_404(Post, id=post_id, \
-                                   status=Post.Status.PUBLISHED)
-    sent = False
-
-    if request.method == 'POST':
-        # Form was submitted
-        form = EmailPostForm(request.POST)
-        if form.is_valid():
-            # Form fields passed validation
-            cd = form.cleaned_data
-            post_url = request.build_absolute_uri(post.get_absolute_url())
-            subject = f"{cd['name']} recommends you read " \
-                      f"{post.title}"
-            message = f"Read {post.title} at {post_url}\n\n" \
-                      f"{cd['name']}\'s comments: {cd['comments']}"
-            send_mail(subject, message, 'your_account@gmail.com',
-                      [cd['to']])
-            sent = True
-
-    else:
-        form = EmailPostForm()
-    return render(request, 'blog/post/share.html', {'post': post,
-                                                    'form': form,
-                                                    'sent': sent})
 
 
 @require_POST
@@ -124,20 +99,17 @@ def post_comment(request, post_id):
 
 
 def post_search(request):
-    form = SearchForm()
-    query = None
-    results = []
-
-    if 'query' in request.GET:
-        form = SearchForm(request.GET)
-        if form.is_valid():
-            query = form.cleaned_data['query']
-            results = Post.published.annotate(
-                similarity=TrigramSimilarity('title', query),
-            ).filter(similarity__gt=0.1).order_by('-similarity')
+    posts = ''
+    query = request.GET.get('q', None)
+    post_count = 0
+    if query:
+        posts = Post.objects.filter(Q(title__icontains=query) | Q(body__icontains=query))
+        post_count = posts.count()
+    context = {
+        'posts': posts,
+        'query': query,
+        'post_count': post_count,
+    }
 
     return render(request,
-                  'blog/post/search.html',
-                  {'form': form,
-                   'query': query,
-                   'results': results})
+                  'search.html', context)

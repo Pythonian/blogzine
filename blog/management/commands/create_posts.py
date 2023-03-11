@@ -24,7 +24,7 @@ class Command(BaseCommand):
             slug = slugify(title)
             author = random.choice(users)
             category = random.choice(categories)
-            excerpt = fake.sentence()
+            excerpt = fake.text()
             body = fake.text()
             publish = fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
             status = Post.Status.PUBLISHED
