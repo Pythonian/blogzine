@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Category: {{ category.name }}{% endblock title %}
+
+{% block content %}
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+    <!-- ======================= Inner intro START -->
+    <section class="pt-4">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-md-8">
+                    <div class="display-1 text-dark text-decoration-underline">{{ category.name }}</div>
+                    <p>{{ posts.count }} posts in this category</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======================= Inner intro END -->
+
+    <!-- ======================= Main content START -->
+    <section class="position-relative pt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row gy-4">
+                        {% for post in posts %}
+                            {% include 'partials/_news_card.html' %}
+                        {% endfor %}
+                        <!-- pagination -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======================= Main content END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+{% endblock content %}
