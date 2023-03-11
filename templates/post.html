@@ -55,26 +55,14 @@
                     {{ post.body|safe|linebreaks }}
 
                     <!-- Tags -->
-                    <ul class="list-inline text-md-center mt-5">
+                    <!-- <ul class="list-inline text-md-center mt-5">
                         <li class="list-inline-item fw-bold">
                             Tags:
                         </li>
                         <li class="list-inline-item">
                             <a class="text-body btn-link" href="#">#agency</a>
                         </li>
-                        <li class="list-inline-item">
-                            <a class="text-body btn-link" href="#">#business</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-body btn-link" href="#">#theme</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-body btn-link" href="#">#bootstrap</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="text-body btn-link" href="#">#marketing</a>
-                        </li>
-                    </ul>
+                    </ul> -->
 
                     <!-- Divider -->
                     <div class="text-center h5 mb-4">. . .</div>
@@ -102,32 +90,25 @@
                         <div class="tiny-slider arrow-hover arrow-blur arrow-white arrow-round">
                             <div class="tiny-slider-inner" data-autoplay="true" data-hoverpause="true" data-gutter="24"
                                 data-arrow="true" data-dots="false" data-items-xl="2" data-items-xs="1">
-
+                                {% for post in similar_posts %}
                                 <!-- Card item START -->
                                 <div class="card">
                                     <!-- Card img -->
                                     <div class="position-relative">
-                                        <img class="card-img grayscale" src="{% static 'images/blog/4by3/03.jpg' %}" alt="Card image">
+                                        {% if post.image %}
+                                        <img class="card-img grayscale" src="{{ post.image.url }}" alt="{{ post.image_caption }}">
+                                        {% endif %}
                                         <div class="card-img-overlay d-flex align-items-start flex-column p-3">
-                                            <!-- Card overlay Top -->
-                                            <div class="w-100 mb-auto d-flex justify-content-end">
-                                                <div class="text-end ms-auto">
-                                                    <!-- Card format icon -->
-                                                    <div class="icon-md bg-white bg-opacity-10 bg-blur text-white fw-bold rounded-circle"
-                                                        title="8.5 rating">8.5</div>
-                                                </div>
-                                            </div>
                                             <!-- Card overlay bottom -->
                                             <div class="w-100 mt-auto">
-                                                <a href="#" class="badge text-bg-dark mb-2"><i
-                                                        class="fas fa-circle me-2 small fw-bold"></i>Marketing</a>
+                                                <a href="{{ post.category.get_absolute_url }}" class="badge text-bg-dark mb-2"><i
+                                                        class="fas fa-circle me-2 small fw-bold"></i>{{ post.category }}</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body px-0 pt-3">
-                                        <h5 class="card-title"><a href="/post/"
-                                                class="btn-link text-reset stretched-link fw-bold">7 common mistakes
-                                                everyone makes while traveling</a></h5>
+                                        <h5 class="card-title"><a href="{{ post.get_absolute_url }}"
+                                                class="btn-link text-reset stretched-link fw-bold">{{ post.title }}</a></h5>
                                         <!-- Card info -->
                                         <ul class="nav nav-divider align-items-center d-none d-sm-inline-block">
                                             <li class="nav-item">
@@ -135,93 +116,20 @@
                                                     <div class="d-flex align-items-center position-relative">
                                                         <div class="avatar avatar-xs">
                                                             <div class="avatar-img rounded-circle bg-dark bg-opacity-10">
-                                                                <span class="text-dark position-absolute top-50 start-50 translate-middle fw-bold small">SA</span>
+                                                                <span class="text-dark position-absolute top-50 start-50 translate-middle fw-bold small">{{ post.author|make_list|first|title }}</span>
                                                             </div>
                                                         </div>
                                                         <span class="ms-3">by <a href="#"
-                                                                class="stretched-link text-reset btn-link">Lori</a></span>
+                                                                class="stretched-link text-reset btn-link">{{ post.author }}</a></span>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="nav-item">Mar 07, 2022</li>
+                                            <li class="nav-item">{{ post.publish|date:"F j, Y" }}</li>
                                         </ul>
                                     </div>
                                 </div>
                                 <!-- Card item END -->
-                                <!-- Card item START -->
-                                <div class="card">
-                                    <!-- Card img -->
-                                    <div class="position-relative">
-                                        <img class="card-img grayscale" src="{% static 'images/blog/4by3/03.jpg' %}" alt="Card image">
-                                        <div class="card-img-overlay d-flex align-items-start flex-column p-3">
-                                            <!-- Card overlay bottom -->
-                                            <div class="w-100 mt-auto">
-                                                <a href="#" class="badge text-bg-dark mb-2"><i
-                                                        class="fas fa-circle me-2 small fw-bold"></i>Sports</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body px-0 pt-3">
-                                        <h5 class="card-title"><a href="/post/"
-                                                class="btn-link text-reset stretched-link fw-bold">Skills that you can
-                                                learn from business</a></h5>
-                                        <!-- Card info -->
-                                        <ul class="nav nav-divider align-items-center d-none d-sm-inline-block">
-                                            <li class="nav-item">
-                                                <div class="nav-link">
-                                                    <div class="d-flex align-items-center position-relative">
-                                                        <div class="avatar avatar-xs">
-                                                            <div class="avatar-img rounded-circle bg-dark bg-opacity-10">
-                                                                <span class="text-dark position-absolute top-50 start-50 translate-middle fw-bold small">SA</span>
-                                                            </div>
-                                                        </div>
-                                                        <span class="ms-3">by <a href="#"
-                                                                class="stretched-link text-reset btn-link">Joan</a></span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">Aug 15, 2022</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Card item END -->
-                                <!-- Card item START -->
-                                <div class="card">
-                                    <!-- Card img -->
-                                    <div class="position-relative">
-                                        <img class="card-img grayscale" src="{% static 'images/blog/4by3/03.jpg' %}" alt="Card image">
-                                        <div class="card-img-overlay d-flex align-items-start flex-column p-3">
-                                            <!-- Card overlay bottom -->
-                                            <div class="w-100 mt-auto">
-                                                <a href="#" class="badge text-bg-dark mb-2"><i
-                                                        class="fas fa-circle me-2 small fw-bold"></i>Marketing</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body px-0 pt-3">
-                                        <h5 class="card-title"><a href="/post/"
-                                                class="btn-link text-reset stretched-link fw-bold">10 tell-tale signs
-                                                you need to get a new business</a></h5>
-                                        <!-- Card info -->
-                                        <ul class="nav nav-divider align-items-center d-none d-sm-inline-block">
-                                            <li class="nav-item">
-                                                <div class="nav-link">
-                                                    <div class="d-flex align-items-center position-relative">
-                                                        <div class="avatar avatar-xs">
-                                                            <div class="avatar-img rounded-circle bg-dark bg-opacity-10">
-                                                                <span class="text-dark position-absolute top-50 start-50 translate-middle fw-bold small">SA</span>
-                                                            </div>
-                                                        </div>
-                                                        <span class="ms-3">by <a href="#"
-                                                                class="stretched-link text-reset btn-link">Bryan</a></span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">Jun 01, 2022</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Card item END -->
+                                {% endfor %}
                             </div>
                         </div>
                         <!-- Slider END -->
@@ -230,162 +138,6 @@
 
                     <!-- Divider -->
                     <hr>
-
-                    <!-- Author info START -->
-                    <div class="d-flex py-4">
-                        <!-- Avatar -->
-                        <a href="#">
-                            <div class="avatar avatar-xxl me-4">
-                                <img class="avatar-img rounded-circle grayscale" src="{% static 'images/avatar/01.jpg' %}" alt="avatar">
-                            </div>
-                        </a>
-                        <!-- Info -->
-                        <div>
-                            <div class="d-sm-flex align-items-center justify-content-between">
-                                <div>
-                                    <h4 class="m-0"><a href="#" class="text-reset">Louis Ferguson</a></h4>
-                                    <small>An editor at Blogzine</small>
-                                </div>
-                                <a href="#" class="btn btn-xs btn-dark-soft">View Articles</a>
-                            </div>
-                            <p class="my-2">Louis Ferguson is a senior editor for the blogzine and also reports on
-                                breaking news based in London. He has written about government, criminal justice, and
-                                the role of money in politics since 2015.</p>
-                            <!-- Social icons -->
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link ps-0 pe-2 fs-5" href="#"><i
-                                            class="fab fa-facebook-square"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-twitter-square"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Author info END -->
-
-                    <!-- Divider -->
-                    <hr>
-
-                    <!-- Comments START -->
-                    <div>
-                        <h3>5 comments</h3>
-                        <!-- Comment level 1-->
-                        <div class="my-4 d-flex">
-                            <div>
-                                <div class="mb-2 d-flex justify-content-between">
-                                    <div>
-                                        <h5 class="m-0">Allen Smith</h5>
-                                        <span class="me-3 small">June 11, 2022 at 6:01 am </span>
-                                    </div>
-                                    <a href="#" class="text-body fw-normal small">Reply</a>
-                                </div>
-                                <p>Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant
-                                    private blushes removed an in equally totally if. Delivered dejection necessary
-                                    objection do Mr prevailed. Mr feeling does chiefly cordial
-                                    in do. </p>
-                            </div>
-                        </div>
-                        <!-- Comment children level 2 -->
-                        <div class="my-4 d-flex ps-3 ps-md-4">
-                            <div>
-                                <div class="mb-2 d-flex justify-content-between">
-                                    <div>
-                                        <h5 class="m-0">Allen Smith</h5>
-                                        <span class="me-3 small">June 11, 2022 at 6:01 am </span>
-                                    </div>
-                                    <a href="#" class="text-body fw-normal small">Reply</a>
-                                </div>
-                                <p>Water timed folly right aware if oh truth. Imprudence attachment him his for
-                                    sympathize. Large above be to means. Dashwood does provide stronger is. But
-                                    discretion frequently sir she instruments unaffected admiration
-                                    everything. </p>
-                            </div>
-                        </div>
-                        <!-- Comment children level 2 -->
-                        <div class="my-4 d-flex ps-3 ps-md-4">
-                            <div>
-                                <div class="mb-2 d-flex justify-content-between">
-                                    <div>
-                                        <h5 class="m-0">Allen Smith</h5>
-                                        <span class="me-3 small">June 11, 2022 at 6:01 am </span>
-                                    </div>
-                                    <a href="#" class="text-body fw-normal small">Reply</a>
-                                </div>
-                                <p>Meant balls it if up doubt small purse. </p>
-                            </div>
-                        </div>
-                        <!-- Comment level 2 -->
-                        <div class="my-4 d-flex ps-2 ps-md-3">
-                            <img class="avatar avatar-md rounded-circle grayscale float-start me-3"
-                                src="{% static 'images/avatar/01.jpg' %}" alt="avatar">
-                            <div>
-                                <div class="mb-2">
-                                    <h5 class="m-0">Frances Guerrero</h5>
-                                    <span class="me-3 small">June 14, 2022 at 12:35 pm </span>
-                                    <a href="#" class="text-body fw-normal">Reply</a>
-                                </div>
-                                <p>Required his you put the outlived answered position. A pleasure exertion if believed
-                                    provided to. All led out world this music while asked. Paid mind even sons does he
-                                    door no. Attended overcame repeated it is perceived
-                                    Marianne in. I think on style child of. Servants moreover in sensible it ye
-                                    possible. </p>
-                            </div>
-                        </div>
-                        <!-- Comment level 1 -->
-                        <div class="my-4 d-flex">
-                            <img class="avatar avatar-md rounded-circle grayscale float-start me-3"
-                                src="{% static 'images/avatar/01.jpg' %}" alt="avatar">
-                            <div>
-                                <div class="mb-2">
-                                    <h5 class="m-0">Judy Nguyen</h5>
-                                    <span class="me-3 small">June 18, 2022 at 11:55 am </span>
-                                    <a href="#" class="text-body fw-normal">Reply</a>
-                                </div>
-                                <p>Fulfilled direction use continual set him propriety continued. Saw met applauded
-                                    favorite deficient engrossed concealed and her. Concluded boy perpetual old
-                                    supposing. Farther related bed and passage comfort civilly.
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Comments END -->
-                    <!-- Reply START -->
-                    <div>
-                        <h3>Leave a reply</h3>
-                        <small>Your email address will not be published. Required fields are marked *</small>
-                        <form class="row g-3 mt-2">
-                            <div class="col-md-6">
-                                <label class="form-label">Name *</label>
-                                <input type="text" class="form-control" aria-label="First name">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Email *</label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <!-- custom checkbox -->
-                            <div class="col-md-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">Save my name and email in
-                                        this browser for the next time I comment. </label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Your Comment *</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-outline-dark">Post comment</button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Reply END -->
                 </div>
                 <!-- Main Content END -->
 

@@ -24,8 +24,8 @@ class Command(BaseCommand):
             slug = slugify(title)
             author = random.choice(users)
             category = random.choice(categories)
-            excerpt = fake.text()
-            body = fake.text()
+            excerpt = fake.paragraph(nb_sentences=10)
+            body = fake.paragraph(nb_sentences=300)
             publish = fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
             status = Post.Status.PUBLISHED
             page_views = fake.random_int(min=1, max=1000)
@@ -37,4 +37,4 @@ class Command(BaseCommand):
                                        body=body, publish=publish, status=status, page_views=page_views,
                                        read_time=read_time, sponsored=sponsored, enable_comments=enable_comments)
 
-            self.stdout.write(self.style.SUCCESS(f'Successfully created post {i+1}: {post.title}'))
+        self.stdout.write(self.style.SUCCESS(f'Successfully created post {count} posts.'))

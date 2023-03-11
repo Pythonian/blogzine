@@ -16,11 +16,11 @@ from .utils import mk_paginator
 
 
 def home(request):
-    latest_posts = Post.published.all()[:8]
+    latest_posts = Post.published.all()[:6]
     sponsored_post = Post.published.filter(sponsored=True).first()
     categories = Category.objects.annotate(post_count=Count('posts')).filter(post_count__gte=1).order_by('?')[:5]
     
-    post_categories = Category.objects.annotate(post_count=Count('posts')).filter(post_count__gte=2).order_by('?')[:3]
+    post_categories = Category.objects.annotate(post_count=Count('posts')).filter(post_count__gte=3).order_by('?')[:3]
     context = {}
     for category in post_categories:
         posts = Post.published.filter(category=category)[:3]
@@ -58,11 +58,12 @@ def post(request, year, month, day, post):
     form = CommentForm()
 
     # List of similar posts
-    post_tags_ids = post.tags.values_list('id', flat=True)
-    similar_posts = Post.published.filter(tags__in=post_tags_ids)\
-                                  .exclude(id=post.id)
-    similar_posts = similar_posts.annotate(same_tags=Count('tags'))\
-                                .order_by('-same_tags','-publish')[:4]
+    # post_tags_ids = post.tags.values_list('id', flat=True)
+    # similar_posts = Post.published.filter(tags__in=post_tags_ids)\
+    #                               .exclude(id=post.id)
+    # similar_posts = similar_posts.annotate(same_tags=Count('tags'))\
+    #                             .order_by('-same_tags','-publish')[:4]
+    similar_posts = Post.objects.filter(category=post.category.id).exclude(id=post.id)[:4]
 
     return render(request,
                   'post.html',
