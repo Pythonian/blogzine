@@ -1,15 +1,5 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment, Category
-from django.core.paginator import Paginator, EmptyPage, \
-                                  PageNotAnInteger
-from django.views.generic import ListView
-from django.contrib.postgres.search import SearchVector, \
-                                           SearchQuery, SearchRank
-from django.contrib.postgres.search import TrigramSimilarity
-from .forms import EmailPostForm, CommentForm, SearchForm
-from django.core.mail import send_mail
-from django.views.decorators.http import require_POST
-from taggit.models import Tag
+from django.shortcuts import render, get_object_or_404
+from .models import Post, Category
 from django.utils import timezone
 from django.db.models import Count, Q
 from .utils import mk_paginator
@@ -52,24 +42,11 @@ def post(request, year, month, day, post):
                              publish__month=month,
                              publish__day=day)
 
-    # List of active comments for this post
-    comments = post.comments.filter(active=True)
-    # Form for users to comment
-    form = CommentForm()
-
-    # List of similar posts
-    # post_tags_ids = post.tags.values_list('id', flat=True)
-    # similar_posts = Post.published.filter(tags__in=post_tags_ids)\
-    #                               .exclude(id=post.id)
-    # similar_posts = similar_posts.annotate(same_tags=Count('tags'))\
-    #                             .order_by('-same_tags','-publish')[:4]
     similar_posts = Post.objects.filter(category=post.category.id).exclude(id=post.id)[:4]
 
     return render(request,
                   'post.html',
                   {'post': post,
-                   'comments': comments,
-                   'form': form,
                    'similar_posts': similar_posts})
 
 
@@ -83,26 +60,6 @@ def category(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts = category.posts.all()
     return render(request, 'category.html', {'category': category, 'posts': posts})
-
-
-@require_POST
-def post_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id, \
-                                   status=Post.Status.PUBLISHED)
-    comment = None
-    # A comment was posted
-    form = CommentForm(data=request.POST)
-    if form.is_valid():
-        # Create a Comment object without saving it to the database
-        comment = form.save(commit=False)
-        # Assign the post to the comment
-        comment.post = post
-        # Save the comment to the database
-        comment.save()
-    return render(request, 'blog/post/comment.html',
-                           {'post': post,
-                            'form': form,
-                            'comment': comment})
 
 
 def post_search(request):
