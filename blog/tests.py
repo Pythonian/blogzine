@@ -54,20 +54,6 @@ class CategoryModelTest(TestCase):
 
 
 # class PostModelTest(TestCase):
-    
-#     def setUp(self):
-#         # Set up non-modified objects used by all test methods
-#         test_user = User.objects.create_user(
-#             username='testuser', password='testpass')
-#         test_category = Category.objects.create(
-#             name='Test category', slug='test-category')
-#         test_post = Post.objects.create(
-#             title='Test post 1', slug='test-post-1',
-#             author=test_user, category=test_category,
-#             excerpt='This is a test', body='Test body content')
-#         test_post.publish = timezone.now()
-#         test_post.save()
-
 
 #     def test_get_previous_post(self):
 #         post = Post.objects.get(id=1)
@@ -94,16 +80,16 @@ class CategoryModelTest(TestCase):
 
 class PostModelTest(TestCase):
 
-    @classmethod
-    def setUpTestData(cls):
+    # @classmethod
+    def setUp(self):
         # Set up non-modified objects used by all test methods
-        user = User.objects.create(username='testuser')
-        category = Category.objects.create(name='testcategory')
-        post1 = Post.objects.create(
+        self.user = User.objects.create(username='testuser')
+        self.category = Category.objects.create(name='testcategory')
+        self.post1 = Post.objects.create(
             title='Test Post',
             slug='test-post',
-            author=user,
-            category=category,
+            author=self.user,
+            category=self.category,
             excerpt='This is a test post.',
             body='Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
             image='test.jpg',
@@ -116,14 +102,14 @@ class PostModelTest(TestCase):
             sponsored=True,
             enable_comments=True,
         )
-        post1.created = timezone.now() - timezone.timedelta(days=8)
-        post1.save()
+        self.post1.created = timezone.now() - timezone.timedelta(days=8)
+        self.post1.save()
 
-        post2 = Post.objects.create(
+        self.post2 = Post.objects.create(
             title='Test Post2',
             slug='test-post2',
-            author=user,
-            category=category,
+            author=self.user,
+            category=self.category,
             excerpt='This is a test post2.',
             body='Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
             image='test.jpg',
@@ -139,31 +125,32 @@ class PostModelTest(TestCase):
         )
 
     def test_title_max_length(self):
-        post = Post.objects.get(id=1)
-        max_length = post._meta.get_field('title').max_length
+        # post = Post.objects.get(id=1)
+        max_length = self.post1._meta.get_field('title').max_length
         self.assertEquals(max_length, 250)
 
     def test_slug_unique_for_date(self):
-        post = Post.objects.get(id=1)
-        unique_for_date = post._meta.get_field('slug').unique_for_date
+        # post = Post.objects.get(id=1)
+        unique_for_date = self.post1._meta.get_field('slug').unique_for_date
         self.assertEquals(unique_for_date, 'publish')
 
     def test_category_related_name(self):
-        category = Category.objects.get(id=1)
-        related_name = category._meta.get_field('posts').related_name
+        # category = Category.objects.get(id=1)
+        related_name = self.category._meta.get_field('posts').related_name
         self.assertEquals(related_name, 'posts')
 
     def test_author_related_name(self):
-        user = User.objects.get(id=1)
-        related_name = user._meta.get_field('posts').related_name
+        # user = User.objects.get(id=1)
+        related_name = self.user._meta.get_field('posts').related_name
         self.assertEquals(related_name, 'posts')
 
     def test_status_choices(self):
-        post = Post.objects.get(id=1)
-        choices = post._meta.get_field('status').choices
+        # post = Post.objects.get(id=1)
+        choices = self.post1._meta.get_field('status').choices
         self.assertEquals(choices, [('DF', 'Draft'), ('PB', 'Published')])
 
     def test_get_absolute_url(self):
+        # post = self.post1
         post = Post.objects.get(id=1)
         expected_url = reverse('post', args=[post.publish.year,
                                              post.publish.month,
@@ -172,7 +159,8 @@ class PostModelTest(TestCase):
         self.assertEqual(post.get_absolute_url(), expected_url)
 
     def test_word_count(self):
-        post = Post.objects.get(id=1)
+        post = self.post1
+        # post = Post.objects.get(id=1)
         # Create a post with 8 words
         post.body = 'This is a test post with 8 words.'
         post.save()
@@ -181,9 +169,12 @@ class PostModelTest(TestCase):
 
     def test_save_method(self):
         from unittest.mock import patch
-        category = Category.objects.get(id=1)
-        post = Post.objects.get(id=1)
-        post2 = Post.objects.get(id=2)
+        # category = Category.objects.get(id=1)
+        category = self.category
+        # post = Post.objects.get(id=1)
+        # post2 = Post.objects.get(id=2)
+        post = self.post1
+        post2 = self.post2
 
         # Check that the sponsored flag is being set correctly
         self.assertTrue(post.sponsored)
@@ -199,9 +190,12 @@ class PostModelTest(TestCase):
             mock_ping_google.assert_called_once()
 
     def test_published_manager(self):
-        user = User.objects.get(id=1)
-        category = Category.objects.get(id=1)
-        published_post = Post.objects.get(id=1)
+        user = self.user
+        category = self.category
+        published_post = self.post1
+        # user = User.objects.get(id=1)
+        # category = Category.objects.get(id=1)
+        # published_post = Post.objects.get(id=1)
         # Create a draft post
         draft_post = Post.objects.create(
             title='Draft Post',
@@ -219,7 +213,8 @@ class PostModelTest(TestCase):
         self.assertEqual(list(published_posts), [published_post])
 
     def test__str__(self):
-        post = Post.objects.get(id=1)
+        # post = Post.objects.get(id=1)
+        post = self.post1
         post_title = str(post)
         self.assertEqual(post_title, 'Test Post')
 
