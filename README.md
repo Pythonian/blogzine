@@ -31,5 +31,5 @@ _Follow the steps below to get the program working on your system locally._
     ```
 6. Visit the URL via the browser
     ```sh
-    http://localhost:1337/
+    http://localhost:8000/
     ```
