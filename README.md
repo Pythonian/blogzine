@@ -14,26 +14,22 @@ _Follow the steps below to get the program working on your system locally._
     ```sh
     cd blogzine
     ```
-3. Build the docker image
+3. Build the docker image and spin up the container
     ```sh
-    docker-compose build
+    docker-compose -f docker-compose.prod.yml up -d --build
     ```
-4. Run the container
+4. Create your database migrations
     ```sh
-    docker-compose up -d
+    docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+    docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
     ```
-5. Create your database migrations
+5. Populate database with Fake data
     ```sh
-    docker-compose exec web python manage.py makemigrations
-    docker-compose exec web python manage.py migrate
+    docker-compose -f docker-compose.prod.yml exec web python manage.py create_admin
+    docker-compose -f docker-compose.prod.yml exec web python manage.py create_categories
+    docker-compose -f docker-compose.prod.yml exec web python manage.py create_posts 100
     ```
-6. Populate database with Fake data
+6. Visit the URL via the browser
     ```sh
-    docker-compose exec web python manage.py create_admin
-    docker-compose exec web python manage.py create_categories
-    docker-compose exec web python manage.py create_posts 100
-    ```
-7. Visit the URL via the browser
-    ```sh
-    http://127.0.0.1:8000/
+    http://localhost:1337/
     ```

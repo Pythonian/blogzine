@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">{{ post.created|date:"F j, Y" }}</li>
+                <li class="nav-item">{{ post.publish|date:"F j, Y" }}</li>
                 <li class="nav-item">{% if post.read_time <= 1 %} < 1 min{% else %}{{ post.read_time }} mins{% endif %} read</li>
                 <li class="nav-item"><i class="far fa-eye me-1"></i> {{ post.page_views }} Views</li>
             </ul>
