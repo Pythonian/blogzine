@@ -17,10 +17,6 @@ RUN mkdir $APP_HOME/staticfiles
 RUN mkdir $APP_HOME/mediafiles
 WORKDIR $APP_HOME
 
-# install psycopg2 dependencies
-# RUN apk update \
-#     && apk add postgresql-dev gcc python3-dev musl-dev
-
 # Install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
